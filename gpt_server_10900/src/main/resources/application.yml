@@ -1,0 +1,35 @@
+server:
+  port: 10900
+#  servlet:
+#    context-path: /elm
+loggin:
+  level:
+    org.springframework: debug
+    com.neusoft.mapper: debug
+spring:
+  application:
+    name: gpt-server
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/elm?characterEncoding=utf-8&serverTimezone=UTC&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  ai:
+    openai:
+      api:
+        key: sk-5li3ELj5WUO5QkAjE9AdAcD974524289Aa1f0d084612C5Fe
+        url: https://api.xty.app/v1/chat/completions
+#eureka配置
+eureka:
+  client:
+    service-url:
+      #将自己注册给Eureka Server集群
+      defaultZone:
+        http://eurekaServer13000:13000/eureka,http://eurekaServer13001:13001/eureka
+instance:
+  prefer-ip-address: true #使用ip地址向Eureka注册
+  instance-id: ${spring.cloud.client.ip-address}:${server.port} #自定义微服务实例ID
+  appname: business_server
+feign:
+  hystrix:
+    enabled: true   #在feign开启hystrix熔断机制
